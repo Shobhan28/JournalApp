@@ -14,22 +14,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
-        public User findByUserName(String userName){
-            return userRepository.findByUserName(userName);
+
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }
