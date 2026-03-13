@@ -1,5 +1,6 @@
 package com.codingwizard.journalApp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,6 +29,7 @@ public class User {
     // Save user → Save journal entries
     //Delete user → Delete journal entries
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<JournalEntry> journalEntryList = new ArrayList<>();
 
 }

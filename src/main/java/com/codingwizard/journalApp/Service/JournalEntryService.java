@@ -36,8 +36,7 @@ public class JournalEntryService {
             }
 
             // Step 2: Set the user inside journal entry
-            // This is important because in MySQL we maintain
-            // relationship using foreign key (user_id)
+            // This is important because in MySQL we maintain relationship using foreign key (user_id)
             journalEntry.setUser(user);
 
             // Step 3: Save journal entry into database
@@ -58,8 +57,7 @@ public class JournalEntryService {
 
 
 
-    // This method is used when we just want to save entry
-    // without linking it with username
+    // This method is used when we just want to save entry, without linking it with username
     public void saveEntry(JournalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
     }
