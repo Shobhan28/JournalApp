@@ -1,12 +1,14 @@
-package com.codingwizard.journalApp.Controller;
+package com.codingwizard.journalApp.controller;
 
-import com.codingwizard.journalApp.Entity.JournalEntry;
-import com.codingwizard.journalApp.Entity.User;
-import com.codingwizard.journalApp.Service.JournalEntryService;
-import com.codingwizard.journalApp.Service.UserService;
+import com.codingwizard.journalApp.entity.JournalEntry;
+import com.codingwizard.journalApp.entity.User;
+import com.codingwizard.journalApp.service.JournalEntryService;
+import com.codingwizard.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -21,8 +23,11 @@ public class JournalEntryController {
     @Autowired
     private JournalEntryService journalEntryService;
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String userName) {
+    @GetMapping
+    public ResponseEntity<?> getAllJournalEntriesOfUser(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
 
         //First we fetch the user from database using username.
         User user = userService.findByUserName(userName);
@@ -43,9 +48,11 @@ public class JournalEntryController {
     }
 
     //create a new journal entry for a user.
-    @PostMapping("/{userName}")
-    public ResponseEntity<?> createEntry(@RequestBody JournalEntry myEntry, @PathVariable String userName) {
+    @PostMapping
+    public ResponseEntity<?> createEntry(@RequestBody JournalEntry myEntry) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
         try {
             // First we check if user exists
             User user = userService.findByUserName(userName);
@@ -73,7 +80,7 @@ public class JournalEntryController {
         return new ResponseEntity<>("Entry not found" , HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/{userName}/id/{id}")
     public ResponseEntity<?> deleteJournalEntryById(@PathVariable Long id, @PathVariable String userName) {
         boolean removed = journalEntryService.deleteById(id, userName);
         if (removed) {

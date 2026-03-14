@@ -1,4 +1,4 @@
-package com.codingwizard.journalApp.Entity;
+package com.codingwizard.journalApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name = "users")
 public class User {
 
 
@@ -23,6 +24,9 @@ public class User {
     private String userName;
     @NonNull
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     //  We need to establish parent child relation.
     //cascade means: Automatically save child when parent is saved.

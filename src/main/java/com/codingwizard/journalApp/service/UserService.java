@@ -1,10 +1,11 @@
-package com.codingwizard.journalApp.Service;
+package com.codingwizard.journalApp.service;
 
-import com.codingwizard.journalApp.Entity.User;
-import com.codingwizard.journalApp.Repository.UserRepository;
+import com.codingwizard.journalApp.entity.User;
+import com.codingwizard.journalApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void saveNewUser(User user) {
+
+        // encode password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // assign default role
+        user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);
     }
 

@@ -1,4 +1,4 @@
-package com.codingwizard.journalApp.Entity;
+package com.codingwizard.journalApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;

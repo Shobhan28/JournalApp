@@ -1,6 +1,6 @@
-package com.codingwizard.journalApp.Repository;
+package com.codingwizard.journalApp.repository;
 
-import com.codingwizard.journalApp.Entity.JournalEntry;
+import com.codingwizard.journalApp.entity.JournalEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

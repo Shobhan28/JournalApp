@@ -1,8 +1,8 @@
-package com.codingwizard.journalApp.Service;
+package com.codingwizard.journalApp.service;
 
-import com.codingwizard.journalApp.Entity.JournalEntry;
-import com.codingwizard.journalApp.Entity.User;
-import com.codingwizard.journalApp.Repository.JournalEntryRepository;
+import com.codingwizard.journalApp.entity.JournalEntry;
+import com.codingwizard.journalApp.entity.User;
+import com.codingwizard.journalApp.repository.JournalEntryRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +56,10 @@ public class JournalEntryService {
     }
 
 
-
     // This method is used when we just want to save entry, without linking it with username
     public void saveEntry(JournalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
+
     }
 
 

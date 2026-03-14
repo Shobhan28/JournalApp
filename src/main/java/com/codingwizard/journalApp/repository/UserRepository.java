@@ -1,8 +1,10 @@
-package com.codingwizard.journalApp.Repository;
+package com.codingwizard.journalApp.repository;
 
-import com.codingwizard.journalApp.Entity.User;
+import com.codingwizard.journalApp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserName(String username);
+
+    void deleteByUserName(String name);
 }
