@@ -1,5 +1,6 @@
 package com.codingwizard.journalApp.service;
 
+import com.codingwizard.journalApp.entity.Role;
 import com.codingwizard.journalApp.entity.User;
 import com.codingwizard.journalApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
           UserDetails userDetails =   org.springframework.security.core.userdetails.User.builder()
                     .username(user.getUserName())
                     .password(user.getPassword())
-                    .roles(user.getRoles().toArray(new String[0]))
+                    .roles(
+                            user.getRoles()
+                                    .stream()
+                                    .map(Role::getName)
+                                    .toArray(String[]::new)
+                    )
                     .build();
           return userDetails;
         }

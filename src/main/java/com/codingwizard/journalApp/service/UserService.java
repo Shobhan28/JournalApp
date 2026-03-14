@@ -1,6 +1,8 @@
 package com.codingwizard.journalApp.service;
 
+import com.codingwizard.journalApp.entity.Role;
 import com.codingwizard.journalApp.entity.User;
+import com.codingwizard.journalApp.repository.RoleRepository;
 import com.codingwizard.journalApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +18,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void saveUser(User user) {
@@ -26,8 +31,16 @@ public class UserService {
 
         // encode password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // assign default role
-        user.setRoles(Arrays.asList("USER"));
+        // assign user role
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        user.getRoles().add(userRole);
+        userRepository.save(user);
+    }
+    public void saveAdminUser(User user) {
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role adminRole = roleRepository.findByName("ADMIN_USER");
+        user.getRoles().add(adminRole);
         userRepository.save(user);
     }
 

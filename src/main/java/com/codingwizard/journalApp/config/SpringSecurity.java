@@ -30,29 +30,20 @@ public class SpringSecurity {
                 .authorizeHttpRequests(auth -> auth
 
                         // Public APIs (no login required)
-                        //.requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
 
                         // allow user registration
                         .requestMatchers(HttpMethod.POST, "/user/**").permitAll()
-                        // protect user APIs except POST
-                        .requestMatchers(HttpMethod.GET, "/user/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/user/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/user/**").authenticated()
-
-
-                        // These endpoints require login
-                        .requestMatchers("/journal/**").authenticated()
 
                         // Only ADMIN role can access
-                        //.requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/journal/**").hasRole("USER")
 
                         // Any other request must be authenticated
                         .anyRequest().authenticated()
                 )
-
                 // Enable Basic Authentication
                 .httpBasic(Customizer.withDefaults())
-
                 // Disable CSRF for REST APIs
                 .csrf(csrf -> csrf.disable());
 
