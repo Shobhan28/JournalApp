@@ -4,13 +4,14 @@ import com.codingwizard.journalApp.entity.Role;
 import com.codingwizard.journalApp.entity.User;
 import com.codingwizard.journalApp.repository.RoleRepository;
 import com.codingwizard.journalApp.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class UserService {
 
@@ -27,15 +28,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void saveNewUser(User user) {
+    public boolean saveNewUser(User user) {
 
+        try {
         // encode password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         // assign user role
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.getRoles().add(userRole);
         userRepository.save(user);
+        return true;
+    } catch (Exception e){
+            log.error("Error occured for {} : " , user.getUserName(), e);
+            return false;
+        }
     }
+
     public void saveAdminUser(User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
